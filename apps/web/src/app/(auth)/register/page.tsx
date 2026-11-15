@@ -131,18 +131,18 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-[85vh] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-slate-50">
-      <div className="max-w-2xl w-full bg-white p-6 sm:p-10 rounded-3xl border border-slate-200 shadow-xl space-y-6">
+    <div className="min-h-[85vh] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-950 transition-colors duration-200">
+      <div className="max-w-2xl w-full bg-white dark:bg-slate-900 p-6 sm:p-10 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl space-y-6">
         
         {/* LOGO & TITLE */}
         <div className="text-center space-y-2">
           <div className="relative h-12 w-36 mx-auto">
             <Image src="/logo.png" alt="MIC Smart Campus" fill className="object-contain" priority />
           </div>
-          <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight">
+          <h2 className="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
             {activeTab === 'student' ? 'Student Admission & Registration' : 'Register Educational Institution'}
           </h2>
-          <p className="text-xs text-slate-500 max-w-md mx-auto">
+          <p className="text-xs text-slate-500 dark:text-slate-400 max-w-md mx-auto">
             {activeTab === 'student' 
               ? 'Apply for academic admission and register your student profile directly into the campus system'
               : 'Provision a dedicated multi-tenant campus database and administrative workspace'
@@ -152,14 +152,14 @@ export default function RegisterPage() {
 
         {/* REGISTRATION TYPE TABS */}
         {!submittedType && (
-          <div className="grid grid-cols-2 gap-2 p-1.5 bg-slate-100 rounded-2xl border border-slate-200">
+          <div className="grid grid-cols-2 gap-2 p-1.5 bg-slate-100 dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700">
             <button
               type="button"
               onClick={() => { setActiveTab('student'); setError(null); }}
               className={`py-2.5 px-4 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 ${
                 activeTab === 'student'
                   ? 'bg-emerald-800 text-white shadow-md'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/60'
+                  : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-slate-700/60'
               }`}
             >
               <GraduationCap className="h-4 w-4" />
@@ -171,7 +171,7 @@ export default function RegisterPage() {
               className={`py-2.5 px-4 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 ${
                 activeTab === 'institution'
                   ? 'bg-emerald-800 text-white shadow-md'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/60'
+                  : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-slate-700/60'
               }`}
             >
               <Building2 className="h-4 w-4" />
