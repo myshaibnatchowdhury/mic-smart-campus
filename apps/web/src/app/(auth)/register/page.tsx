@@ -16,11 +16,14 @@ import {
   BookOpen, 
   Users, 
   ArrowRight,
-  ShieldAlert
+  ShieldAlert,
+  Eye,
+  EyeOff
 } from 'lucide-react';
 
 export default function RegisterPage() {
   const [activeTab, setActiveTab] = useState<'student' | 'institution'>('student');
+  const [showPassword, setShowPassword] = useState(false);
 
   // Student Admission Form State
   const [studentData, setStudentData] = useState({
@@ -431,17 +434,32 @@ export default function RegisterPage() {
 
               {/* Password */}
               <div className="space-y-1 sm:col-span-2">
-                <label className="text-xs font-semibold text-slate-700 flex items-center gap-1">
-                  <Lock className="h-3.5 w-3.5 text-emerald-700" /> Create Student Account Password
+                <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 flex items-center gap-1">
+                  <Lock className="h-3.5 w-3.5 text-emerald-700 dark:text-emerald-400" /> Create Student Account Password
                 </label>
-                <input
-                  type="password"
-                  required
-                  value={studentData.password}
-                  onChange={(e) => setStudentData({ ...studentData, password: e.target.value })}
-                  placeholder="Enter a secure password for portal sign-in"
-                  className="w-full rounded-xl border border-slate-300 py-2.5 px-3.5 text-sm focus:border-emerald-600 focus:outline-none focus:ring-1 focus:ring-emerald-600"
-                />
+                <div className="relative">
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    required
+                    value={studentData.password}
+                    onChange={(e) => setStudentData({ ...studentData, password: e.target.value })}
+                    placeholder="Enter a secure password for portal sign-in"
+                    className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-white py-2.5 pl-3.5 pr-11 text-sm focus:border-emerald-600 focus:outline-none focus:ring-1 focus:ring-emerald-600 transition"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    title={showPassword ? 'Hide password' : 'Show password'}
+                    aria-label={showPassword ? 'Hide password' : 'Show password'}
+                    className="absolute right-3.5 top-2.5 p-0.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition focus:outline-none"
+                  >
+                    {showPassword ? (
+                      <EyeOff className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                    ) : (
+                      <Eye className="h-4 w-4" />
+                    )}
+                  </button>
+                </div>
               </div>
 
             </div>

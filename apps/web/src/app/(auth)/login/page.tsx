@@ -12,7 +12,8 @@ import {
   ShieldCheck, 
   CheckCircle2, 
   Lock, 
-  RotateCcw,
+  Eye, 
+  EyeOff,
   Sparkles
 } from 'lucide-react';
 import { useApp } from '@/context/app-context';
@@ -31,6 +32,11 @@ function LoginForm() {
   const [otpCode, setOtpCode] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+
+  // Password visibility states
+  const [showLoginPassword, setShowLoginPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -296,18 +302,31 @@ function LoginForm() {
             <div className="relative">
               <KeyRound className="absolute left-3.5 top-3 h-4 w-4 text-slate-400" />
               <input
-                type="password"
+                type={showLoginPassword ? 'text' : 'password'}
                 required
                 autoComplete="new-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder={t('login_pass_placeholder')}
-                className={`w-full rounded-xl border py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 transition ${
+                className={`w-full rounded-xl border py-2.5 pl-10 pr-11 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 transition ${
                   theme === 'dark'
                     ? 'border-slate-700 bg-slate-950 text-white placeholder-slate-500 focus:border-emerald-500'
                     : 'border-slate-300 bg-white text-slate-900 placeholder-slate-400 focus:border-emerald-600'
                 }`}
               />
+              <button
+                type="button"
+                onClick={() => setShowLoginPassword(!showLoginPassword)}
+                title={showLoginPassword ? (language === 'bn' ? 'পাসওয়ার্ড লুকান' : 'Hide password') : (language === 'bn' ? 'পাসওয়ার্ড দেখুন' : 'Show password')}
+                aria-label={showLoginPassword ? 'Hide password' : 'Show password'}
+                className="absolute right-3.5 top-2.5 p-0.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition focus:outline-none"
+              >
+                {showLoginPassword ? (
+                  <EyeOff className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                ) : (
+                  <Eye className="h-4 w-4" />
+                )}
+              </button>
             </div>
           </div>
 
@@ -406,17 +425,30 @@ function LoginForm() {
             <div className="relative">
               <Lock className="absolute left-3.5 top-3 h-4 w-4 text-slate-400" />
               <input
-                type="password"
+                type={showNewPassword ? 'text' : 'password'}
                 required
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
                 placeholder="••••••••"
-                className={`w-full rounded-xl border py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 transition ${
+                className={`w-full rounded-xl border py-2.5 pl-10 pr-11 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 transition ${
                   theme === 'dark'
                     ? 'border-slate-700 bg-slate-950 text-white placeholder-slate-500 focus:border-emerald-500'
                     : 'border-slate-300 bg-white text-slate-900 placeholder-slate-400 focus:border-emerald-600'
                 }`}
               />
+              <button
+                type="button"
+                onClick={() => setShowNewPassword(!showNewPassword)}
+                title={showNewPassword ? (language === 'bn' ? 'পাসওয়ার্ড লুকান' : 'Hide password') : (language === 'bn' ? 'পাসওয়ার্ড দেখুন' : 'Show password')}
+                aria-label={showNewPassword ? 'Hide password' : 'Show password'}
+                className="absolute right-3.5 top-2.5 p-0.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition focus:outline-none"
+              >
+                {showNewPassword ? (
+                  <EyeOff className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                ) : (
+                  <Eye className="h-4 w-4" />
+                )}
+              </button>
             </div>
           </div>
 
@@ -427,17 +459,30 @@ function LoginForm() {
             <div className="relative">
               <Lock className="absolute left-3.5 top-3 h-4 w-4 text-slate-400" />
               <input
-                type="password"
+                type={showConfirmPassword ? 'text' : 'password'}
                 required
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="••••••••"
-                className={`w-full rounded-xl border py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 transition ${
+                className={`w-full rounded-xl border py-2.5 pl-10 pr-11 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 transition ${
                   theme === 'dark'
                     ? 'border-slate-700 bg-slate-950 text-white placeholder-slate-500 focus:border-emerald-500'
                     : 'border-slate-300 bg-white text-slate-900 placeholder-slate-400 focus:border-emerald-600'
                 }`}
               />
+              <button
+                type="button"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                title={showConfirmPassword ? (language === 'bn' ? 'পাসওয়ার্ড লুকান' : 'Hide password') : (language === 'bn' ? 'পাসওয়ার্ড দেখুন' : 'Show password')}
+                aria-label={showConfirmPassword ? 'Hide password' : 'Show password'}
+                className="absolute right-3.5 top-2.5 p-0.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition focus:outline-none"
+              >
+                {showConfirmPassword ? (
+                  <EyeOff className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                ) : (
+                  <Eye className="h-4 w-4" />
+                )}
+              </button>
             </div>
           </div>
 
