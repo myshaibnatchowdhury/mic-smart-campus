@@ -328,6 +328,9 @@ function LoginForm() {
                 )}
               </button>
             </div>
+            <div className="flex items-center justify-between text-[11px] pt-1 text-slate-500 dark:text-slate-400">
+              <span>{language === 'bn' ? 'সুপার অ্যাডমিন ডিফল্ট পাসওয়ার্ড:' : 'Super Admin Default Password:'} <code className="font-mono font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20">admin123</code></span>
+            </div>
           </div>
 
           <button

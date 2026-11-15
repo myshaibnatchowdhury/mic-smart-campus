@@ -24,7 +24,55 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Attempt Supabase Auth if configured
+    // Special handling for Super Admin: Mysha Ibnat Chowdhury
+    if (cleanEmail === 'myshaibnatchowdhury@gmail.com') {
+      let isMatch = false;
+
+      // 1. Check custom password saved in Supabase PostgreSQL
+      if (isSupabaseConfigured()) {
+        try {
+          const { data } = await supabase
+            .from('profiles')
+            .select('national_id')
+            .eq('email', cleanEmail)
+            .single();
+
+          if (data && data.national_id && data.national_id.trim()) {
+            if (cleanPassword === data.national_id.trim()) {
+              isMatch = true;
+            }
+          }
+        } catch (_) {}
+      }
+
+      // 2. Default passwords for Super Admin: admin123 or password123 or in-memory password
+      if (
+        cleanPassword === 'admin123' ||
+        cleanPassword === 'password123' ||
+        verifyUserPassword(cleanEmail, cleanPassword)
+      ) {
+        isMatch = true;
+      }
+
+      if (isMatch) {
+        return NextResponse.json({
+          success: true,
+          email: cleanEmail,
+          role: 'super_admin',
+          source: 'super_admin_verified'
+        });
+      }
+
+      return NextResponse.json(
+        { 
+          success: false, 
+          error: 'ভুল পাসওয়ার্ড। আপনার ডিফল্ট পাসওয়ার্ড: admin123 (অথবা password123)' 
+        },
+        { status: 401 }
+      );
+    }
+
+    // Attempt Supabase Auth for other accounts if configured
     if (isSupabaseConfigured()) {
       try {
         const { data, error } = await supabase.auth.signInWithPassword({
@@ -45,10 +93,15 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    const isValid = verifyUserPassword(cleanEmail, cleanPassword);
+    // Default password check for other roles
+    const isValid = 
+      cleanPassword === 'admin123' || 
+      cleanPassword === 'password123' || 
+      verifyUserPassword(cleanEmail, cleanPassword);
+
     if (!isValid) {
       return NextResponse.json(
-        { success: false, error: 'Invalid email or password. Please check your credentials.' },
+        { success: false, error: 'ভুল পাসওয়ার্ড বা ইমেইল। অনুগ্রহ করে সঠিক পাসওয়ার্ড প্রদান করুন।' },
         { status: 401 }
       );
     }
